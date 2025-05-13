@@ -12,7 +12,7 @@ services:
         "--datadir=/tmp/mysqldata",
         # These 3 keys run MySQL with GTID consistency enforced to avoid issues with production deployments that use it.
         "--log-bin=bin.log",
-        "--server-id=master-01",
+        "--server-id=1",
         # Required for storage of Apple MDM bootstrap packages.
         "--max_allowed_packet=536870912",
       ]
