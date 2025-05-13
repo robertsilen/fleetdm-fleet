@@ -9,12 +9,10 @@ services:
     volumes:
       - mysql-persistent-volume:/tmp
     command: [
-        "mysqld",
         "--datadir=/tmp/mysqldata",
         # These 3 keys run MySQL with GTID consistency enforced to avoid issues with production deployments that use it.
-        "--enforce-gtid-consistency=ON",
         "--log-bin=bin.log",
-        "--server-id=master-01",
+        "--server-id=1",
         # Required for storage of Apple MDM bootstrap packages.
         "--max_allowed_packet=536870912",
       ]
@@ -33,7 +31,6 @@ services:
     platform: ${FLEET_MYSQL_PLATFORM:-linux/x86_64}
     # innodb-file-per-table=OFF gives ~20% speedup for test runs.
     command: [
-        "mysqld",
         "--datadir=/tmpfs",
         "--slow_query_log=1",
         "--log_output=TABLE",
@@ -41,7 +38,6 @@ services:
         "--innodb-file-per-table=OFF",
         "--table-definition-cache=8192",
         # These 3 keys run MySQL with GTID consistency enforced to avoid issues with production deployments that use it.
-        "--enforce-gtid-consistency=ON",
         "--log-bin=bin.log",
         "--server-id=1",
         # Required for storage of Apple MDM bootstrap packages.
@@ -59,7 +55,6 @@ services:
     platform: ${FLEET_MYSQL_PLATFORM:-linux/x86_64}
     # innodb-file-per-table=OFF gives ~20% speedup for test runs.
     command: [
-        "mysqld",
         "--datadir=/tmpfs",
         "--slow_query_log=1",
         "--log_output=TABLE",
@@ -67,7 +62,6 @@ services:
         "--innodb-file-per-table=OFF",
         "--table-definition-cache=8192",
         # These 3 keys run MySQL with GTID consistency enforced to avoid issues with production deployments that use it.
-        "--enforce-gtid-consistency=ON",
         "--log-bin=bin.log",
         "--server-id=2",
         # Required for storage of Apple MDM bootstrap packages.
