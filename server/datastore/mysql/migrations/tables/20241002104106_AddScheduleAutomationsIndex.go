@@ -12,7 +12,7 @@ func init() {
 func Up_20241002104106(tx *sql.Tx) error {
 	_, err := tx.Exec(`
 		ALTER TABLE queries
-		ADD COLUMN is_scheduled BOOLEAN GENERATED ALWAYS AS (schedule_interval > 0) STORED NOT NULL
+		ADD COLUMN is_scheduled BOOLEAN GENERATED ALWAYS AS (schedule_interval > 0) STORED
 	`)
 	if err != nil {
 		return fmt.Errorf("error creating generated column is_scheduled: %w", err)
