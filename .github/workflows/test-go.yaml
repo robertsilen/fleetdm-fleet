@@ -154,13 +154,13 @@ jobs:
       if: ${{ env.NEED_DOCKER }}
       run: |
         echo "waiting for mysql..."
-        until docker compose exec -T mysql_test sh -c "mysql -uroot -p\"\${MYSQL_ROOT_PASSWORD}\" -e \"SELECT 1=1\" fleet" &> /dev/null; do
+        until docker compose exec -T mysql_test healthcheck.sh --connect --innodb_initialized; do
             echo "."
             sleep 1
         done
         echo "mysql is ready"
         echo "waiting for mysql replica..."
-        until docker compose exec -T mysql_replica_test sh -c "mysql -uroot -p\"\${MYSQL_ROOT_PASSWORD}\" -e \"SELECT 1=1\" fleet" &> /dev/null; do
+        until docker compose exec -T mysql_replica_test healthcheck.sh --connect --innodb_initialized; do
             echo "."
             sleep 1
         done
@@ -189,7 +189,7 @@ jobs:
     - name: Create mysql identifier without colon
       if: always()
       run: |
-        echo "MATRIX_MYSQL_ID=$(echo ${{ matrix.mysql }} | tr -d ':')" >> $GITHUB_ENV
+        echo "MATRIX_MYSQL_ID=$(echo ${{ matrix.mysql }} | sed -e 's:.*\/::' -e 's/://')" >> $GITHUB_ENV
 
     - name: Save coverage
       uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
