@@ -22,8 +22,8 @@ on:
       - 'server/authz/policy.rego'
       - 'docker-compose.yml'
   workflow_dispatch: # Manual
-  schedule:
-    - cron: '0 4 * * *'
+  #schedule:
+  #  - cron: '0 4 * * *'
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
